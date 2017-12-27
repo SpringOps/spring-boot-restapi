@@ -1,0 +1,225 @@
+swagger: '2.0'
+info:
+  description: |
+    Project: MyAppDemo - R1.0
+
+    Module: Demo Application
+
+    This is the API Specification for Demo Service.
+  version: '1.0'
+  title: Demo Application
+  contact:
+    email: 
+host: api.demo.com
+basePath: /api
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+parameters:
+  User:
+    in: header
+    name: My-Api-Key
+    required: false
+    type: string
+    description: UserID (Principal)
+responses:
+  '400':
+    description: Parameter do not match the expected format.
+    schema:
+      $ref: '#/definitions/Errors'
+  '401':
+    description: Unauthorized -Identity token is not passed.
+    schema:
+      $ref: '#/definitions/Errors'
+  '403':
+    description: Forbidden - Identity does not have authority for the specified request.
+    schema:
+      $ref: '#/definitions/Errors'
+  '404':
+    description: Data Not found.
+    schema:
+      $ref: '#/definitions/Errors'
+  '500':
+    description: Error Occured.
+    schema:
+      $ref: '#/definitions/Errors'
+  '503':
+    description: >-
+      Service Unavailable -  Returned If this function is dependent on other
+      services which are unavailable or DB connection failure etc.
+    schema:
+      $ref: '#/definitions/Errors'
+paths:
+  /makeonearray:
+    post:
+      summary: >-
+        Accepts JSON objects with multiple number arrays. Combine these arrays,
+        removes duplicate numbers and sorts them. Response is JSON object which
+        contains this combined sorted array.
+      description: >-
+        Combine, remove duplicate and sort all input arrays in request JSON
+        object.
+      parameters:
+        - $ref: '#/parameters/User'
+        - in: body
+          name: Arrays
+          description: Json Object with arrays
+          required: true
+          schema:
+            $ref: '#/definitions/Arrays'
+      responses:
+        '200':
+          description: The array found successfully.
+          schema:
+            $ref: '#/definitions/FinalArray'
+        '400':
+          $ref: '#/responses/400'
+        '401':
+          $ref: '#/responses/401'
+        '403':
+          $ref: '#/responses/403'
+        '500':
+          $ref: '#/responses/500'
+        '503':
+          $ref: '#/responses/503'
+  /fibonacci:
+    get:
+      summary: Returns the nth Fibonacci number.
+      description: Returns the nth number in the Fibonacci sequence.
+      parameters:
+        - $ref: '#/parameters/User'
+        - in: query
+          name: 'n'
+          description: The index (n) of the Fibonacci sequence
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Series Details.
+          schema:
+            $ref: '#/definitions/Series'
+        '400':
+          $ref: '#/responses/400'
+        '401':
+          $ref: '#/responses/401'
+        '403':
+          $ref: '#/responses/403'
+        '500':
+          $ref: '#/responses/500'
+        '503':
+          $ref: '#/responses/503'
+  /reverseWords:
+    get:
+      summary: Reverses the letters of each word in a sentence.
+      description: Reverses the letters of each word in a sentence.
+      parameters:
+        - $ref: '#/parameters/User'
+        - in: query
+          name: sentence
+          description: The sentence to be reveresed
+          required: true
+          type: string
+      responses:
+        '200':
+          description: String reversed.
+          schema:
+            $ref: '#/definitions/ReversedString'
+        '400':
+          $ref: '#/responses/400'
+        '401':
+          $ref: '#/responses/401'
+        '403':
+          $ref: '#/responses/403'
+        '404':
+          $ref: '#/responses/404'
+        '500':
+          $ref: '#/responses/500'
+        '503':
+          $ref: '#/responses/503'
+  /getTriangleType:
+    get:
+      summary: RetrieveReturns the type of triangle given the lengths of its sides
+      description: Returns the type of triangle given the lengths of its sides
+      parameters:
+        - $ref: '#/parameters/User'
+        - in: query
+          name: a
+          description: The length of side a.
+          required: true
+          type: integer
+        - in: query
+          name: b
+          description: The length of side b.
+          required: true
+          type: integer
+        - in: query
+          name: c
+          description: The length of side c
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Triangle Details.
+          schema:
+            $ref: '#/definitions/Triangle'
+        '400':
+          $ref: '#/responses/400'
+        '401':
+          $ref: '#/responses/401'
+        '403':
+          $ref: '#/responses/403'
+        '500':
+          $ref: '#/responses/500'
+        '503':
+          $ref: '#/responses/503'
+definitions:
+  Arrays:
+    type: object
+    properties:
+      Array1:
+        type: object
+      Array2:
+        type: object
+      Array3:
+        type: object
+  FinalArray:
+    type: object
+    properties:
+      MergedArray:
+        type: object
+  Series:
+    type: object
+	properties:
+	  Result:
+	    type: number
+  ReversedString:
+    type: object
+	properties:
+	  Result:
+	    type: string
+  Triangle:
+    type: object
+	properties:
+	  Result:
+	    type: string
+  Errors:
+    type: object
+    properties:
+      ErrorList:
+        type: array
+        items:
+          $ref: '#/definitions/Error'
+  Error:
+    type: object
+    properties:
+      Field:
+        type: string
+      ErrorCode:
+        type: string
+      Message:
+        type: string
+      Description:
+        type: string
