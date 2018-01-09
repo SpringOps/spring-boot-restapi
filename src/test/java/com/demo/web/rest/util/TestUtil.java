@@ -43,17 +43,17 @@ public class TestUtil {
 				return null;
 			}
 			if(arrayOne != null){
-				for (Integer entry : arrayOne) {
+				for (int entry : arrayOne) {
 					hashedArray.add(entry);
 				}
 			}
 			if(arrayTwo != null){
-				for (Integer entry : arrayTwo) {
+				for (int entry : arrayTwo) {
 					hashedArray.add(entry);
 				}
 			}
 			if(arrayThree != null){
-				for (Integer entry : arrayThree) {
+				for (int entry : arrayThree) {
 					hashedArray.add(entry);
 				}
 			}

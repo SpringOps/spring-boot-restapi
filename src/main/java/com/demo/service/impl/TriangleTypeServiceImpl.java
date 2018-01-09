@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.service.TriangleTypeService;
 import com.demo.web.rest.errors.CustomValidationException;
+import com.demo.web.rest.errors.ErrorConstants;
 
 /**
  * Service Implementation to check for triangle type based its edges.
@@ -31,10 +32,10 @@ public class TriangleTypeServiceImpl implements TriangleTypeService {
 	@Override
 	public String findTriangleType(Integer sideALength, Integer sideBLength, Integer sideCLength) {
 		LOGGER.info("Going to find the triangle type ");
-		if (sideALength <=0 || sideBLength <= 0 || sideCLength <= 0)
+		if (sideALength <= 0 || sideBLength <= 0 || sideCLength <= 0)
 	      {
-			LOGGER.error("Triangle sides are null");
-	        throw new CustomValidationException("TriangleSide", "ERROR104", "Triangle lengths are null");
+			LOGGER.error("Triangle sides are 0 or nagetive");
+	        throw new CustomValidationException("TriangleSide", ErrorConstants.TRIANGLE_SIDE_INVALID_CODE, ErrorConstants.TRIANGLE_SIDE_INVALID_MESSAGE);
 	      }
 		if (!this.isExistentTriangle(sideALength, sideBLength, sideCLength)) {
 			LOGGER.info("Triangle type is  ", TriangleType.ERROR.getShape());

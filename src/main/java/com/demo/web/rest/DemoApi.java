@@ -52,7 +52,7 @@ public interface DemoApi {
     @RequestMapping(value = "/fibonacci",
         produces = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<Series> getFibonacci(@ApiParam(value = "UserID (Principal)" ,required=true) @RequestHeader(value="My-Api-Key", required=false) String myApiKey, @NotNull@ApiParam(value = "The index (n) of the Fibonacci sequence", required = true) @RequestParam(value = "n", required = true) Integer n);
+    ResponseEntity<Series> getFibonacci(@ApiParam(value = "UserID (Principal)" ,required=true) @RequestHeader(value="My-Api-Key", required=false) String myApiKey, @NotNull@ApiParam(value = "The index (n) of the Fibonacci sequence", required = true) @RequestParam(value = "position", required = true) long position);
 
 
 	/**
@@ -125,6 +125,6 @@ public interface DemoApi {
     @RequestMapping(value = "/triangleType",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Triangle> getTriangleType(@ApiParam(value = "UserID (Principal)" ,required=true) @RequestHeader(value="My-Api-Key", required=false) String myApiKey, @NotNull@ApiParam(value = "The length of side a.", required = true) @RequestParam(value = "a", required = true) Integer a, @NotNull@ApiParam(value = "The length of side b.", required = true) @RequestParam(value = "b", required = true) Integer b, @NotNull@ApiParam(value = "The length of side c", required = true) @RequestParam(value = "c", required = true) Integer c);
+    ResponseEntity<Triangle> getTriangleType(@ApiParam(value = "UserID (Principal)" ,required=true) @RequestHeader(value="My-Api-Key", required=false) String myApiKey, @NotNull@ApiParam(value = "The length of side a.", required = true) @RequestParam(value = "sideALength", required = true) Integer sideALength, @NotNull@ApiParam(value = "The length of side b.", required = true) @RequestParam(value = "sideBLength", required = true) Integer sideBLength, @NotNull@ApiParam(value = "The length of side c", required = true) @RequestParam(value = "sideCLength", required = true) Integer sideCLength);
 
 }

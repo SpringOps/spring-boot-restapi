@@ -22,10 +22,9 @@ public class TriangleTypeServiceImplTest {
 		Integer sideALength = 1;
 		Integer sideBLength = 2;
 		Integer sideCLength = 2;
-		String type = "Isosceles";
 		String result = triangleTypeService.findTriangleType(sideALength, sideBLength, sideCLength);
 		assertNotNull(result);
-		assertEquals(type, result);
+		assertEquals(TriangleType.ISOSCELES.getShape(), result);
 	}
 
 	@Test
@@ -33,10 +32,9 @@ public class TriangleTypeServiceImplTest {
 		Integer sideALength = 1;
 		Integer sideBLength = 1;
 		Integer sideCLength = 1;
-		String type = "Equilateral";
 		String result = triangleTypeService.findTriangleType(sideALength, sideBLength, sideCLength);
 		assertNotNull(result);
-		assertEquals(type, result); 
+		assertEquals(TriangleType.EQUILATERAL.getShape(), result); 
 	}
 
 	@Test
@@ -44,10 +42,9 @@ public class TriangleTypeServiceImplTest {
 		Integer sideALength = 3;
 		Integer sideBLength = 5;
 		Integer sideCLength = 4;
-		String type = "Scalene";
 		String result = triangleTypeService.findTriangleType(sideALength, sideBLength, sideCLength);
 		assertNotNull(result);
-		assertEquals(type, result);
+		assertEquals(TriangleType.SCALENE.getShape(), result);
 	}
 
 	@Test
@@ -55,10 +52,9 @@ public class TriangleTypeServiceImplTest {
 		Integer sideALength = 1;
 		Integer sideBLength = 2;
 		Integer sideCLength = 4;
-		String type = "Undefine-Shape";
 		String result = triangleTypeService.findTriangleType(sideALength, sideBLength, sideCLength);
 		assertNotNull(result);
-		assertEquals(type, result);
+		assertEquals(TriangleType.ERROR.getShape(), result);
 	}
 
 	@Test(expected = CustomValidationException.class)

@@ -18,7 +18,7 @@ public class FibonacciServiceImplTest {
 	
 	@Test
 	public void testGetFibonacci() {
-		Integer seriesPosition = 4;
+		long seriesPosition = 4;
 		Long value = fibonacciService.getFibonacciSeriesValue(seriesPosition);
 	 	assertNotNull(value);
 	 	
@@ -26,7 +26,7 @@ public class FibonacciServiceImplTest {
 	
 	@Test(expected = CustomValidationException.class)
 	public void testGetFibonacciWithNull() {
-		Integer seriesPosition = null;
+		long seriesPosition = -1;
 		Long value = fibonacciService.getFibonacciSeriesValue(seriesPosition);
 	 	assertNull(value);
 	 	
@@ -34,7 +34,7 @@ public class FibonacciServiceImplTest {
 	
 	@Test(expected = CustomValidationException.class)
 	public void testGetFibonacciException() {
-		Integer seriesPosition = 98;
+		long seriesPosition = 101;
 		Long value = fibonacciService.getFibonacciSeriesValue(seriesPosition);
 	 	assertNotNull(value);
 	 	
@@ -42,7 +42,7 @@ public class FibonacciServiceImplTest {
 	
 	@Test(expected = CustomValidationException.class)
 	public void testGetFibonacciExceptionWithNagetive() {
-		Integer seriesPosition = -98;
+		long seriesPosition = -98;
 		Long value = fibonacciService.getFibonacciSeriesValue(seriesPosition);
 	 	assertNotNull(value);
 	 	

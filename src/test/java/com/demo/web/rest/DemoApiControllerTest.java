@@ -58,7 +58,7 @@ public class DemoApiControllerTest {
 	
 	@Test
 	public void testGetFibonacci() {
-		Integer seriesPosition = 4;
+		long seriesPosition = 4;
 		Mockito.when(fibonacciService.getFibonacciSeriesValue(seriesPosition)).thenReturn(3L);
 		ResponseEntity<Series> responseEntity = demoApiController.getFibonacci(
 				"testUser",
@@ -69,7 +69,7 @@ public class DemoApiControllerTest {
 	
 	@Test
 	public void testGetFibonacciWithoutApiKey() {
-		Integer seriesPosition = 4;
+		long seriesPosition = 8;
 		Mockito.when(fibonacciService.getFibonacciSeriesValue(seriesPosition)).thenReturn(3L);
 		ResponseEntity<Series> responseEntity = demoApiController.getFibonacci(
 				null,
@@ -80,7 +80,7 @@ public class DemoApiControllerTest {
 	
 	@Test
 	public void testGetFibonacciWithNull() {
-		Integer seriesPosition = null;
+		long seriesPosition = -1;
 		Mockito.when(fibonacciService.getFibonacciSeriesValue(seriesPosition)).thenReturn(null);
 		ResponseEntity<Series> responseEntity = demoApiController.getFibonacci(
 				"testUser",
@@ -90,7 +90,7 @@ public class DemoApiControllerTest {
 	}
 	@Test(expected = CustomValidationException.class)
 	public void testGetFibonacciWithThresholdValue() {
-		Integer seriesPosition = 98;
+		long seriesPosition = 101;
 		Mockito.when(fibonacciService.getFibonacciSeriesValue(seriesPosition)).thenThrow(CustomValidationException.class);
 		ResponseEntity<Series> responseEntity = demoApiController.getFibonacci(
 				"testUser",
@@ -121,7 +121,27 @@ public class DemoApiControllerTest {
 	}
 	@Test(expected = CustomValidationException.class)
 	public void testReverseWordsWithEmptyString() {
-		String sentence = "";
+		String sentence = "this %^ test";
+		ResponseEntity<ReversedString> responseEntity = demoApiController.getReverseWords(
+				null,
+				sentence);
+		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+       
+	}
+	
+	@Test(expected = CustomValidationException.class)
+	public void testReverseWordsWithNumericCharString() {
+		String sentence = "this23  test56f34";
+		ResponseEntity<ReversedString> responseEntity = demoApiController.getReverseWords(
+				null,
+				sentence);
+		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+       
+	}
+	
+	@Test(expected = CustomValidationException.class)
+	public void testReverseWordsWithSpecialCharString() {
+		String sentence = "The is &";
 		ResponseEntity<ReversedString> responseEntity = demoApiController.getReverseWords(
 				null,
 				sentence);

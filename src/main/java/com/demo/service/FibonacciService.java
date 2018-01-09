@@ -12,6 +12,6 @@ public interface FibonacciService {
 	 * @param Integer position
 	 * @return Long series number
 	 */
-	Long getFibonacciSeriesValue(Integer position);
+	Long getFibonacciSeriesValue(long position);
 	
 }

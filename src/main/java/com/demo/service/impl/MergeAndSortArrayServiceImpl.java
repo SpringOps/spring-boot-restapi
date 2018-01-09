@@ -11,6 +11,7 @@ import com.demo.dto.Arrays;
 import com.demo.dto.FinalArray;
 import com.demo.service.MergeAndSortArrayService;
 import com.demo.web.rest.errors.CustomValidationException;
+import com.demo.web.rest.errors.ErrorConstants;
 
 /**
  * Service Implementation for managing Merging and sorting of input arrays.
@@ -34,7 +35,7 @@ public class MergeAndSortArrayServiceImpl implements MergeAndSortArrayService {
 		LOGGER.info("Going to merge and sort arrays", arrayJson);
 		if (arrayJson == null) {
 			LOGGER.error("Array json is null , can not merge it");
-			throw new CustomValidationException("sourceString", "ERROR103", "JSON should contains at-least 1 array");
+			throw new CustomValidationException("sourceString", ErrorConstants.ARRAY_JSON_INPUT_NULL_CODE, ErrorConstants.ARRAY_JSON_INPUT_NULL_MESSAGE);
 		}
 		Integer[] mergedArray = mergeAndSortArrays(arrayJson.getArray1(), arrayJson.getArray2(), arrayJson.getArray3());
 		LOGGER.info("got merged array ");
@@ -59,21 +60,24 @@ public class MergeAndSortArrayServiceImpl implements MergeAndSortArrayService {
 		TreeSet<Integer> hashedArray = new TreeSet<Integer>();
 		if (arrayOne == null && arrayTwo == null && arrayThree == null) {
 			LOGGER.error("Arrays does'nt have elements , can not merge it");
-			throw new CustomValidationException("sourceString", "ERROR103", "JSON should contains at-least 1 array");
+			throw new CustomValidationException("sourceString", ErrorConstants.JSON_INPUT_WITH_ALL_NULL_ARRAYS_CODE, ErrorConstants.JSON_INPUT_WITH_ALL_NULL_ARRAYS_MESSAGE);
 		}
 		if (arrayOne != null) {
 			for (Integer entry : arrayOne) {
-				hashedArray.add(entry);
+				if(entry != null)
+					hashedArray.add(entry);
 			}
 		}
 		if (arrayTwo != null) {
 			for (Integer entry : arrayTwo) {
-				hashedArray.add(entry);
+				if(entry != null)
+					hashedArray.add(entry);
 			}
 		}
 		if (arrayThree != null) {
 			for (Integer entry : arrayThree) {
-				hashedArray.add(entry);
+				if(entry != null)
+					hashedArray.add(entry);
 			}
 		}
 		LOGGER.info("Arrays has been merge and sorted");

@@ -1,10 +1,12 @@
 package com.demo.web.rest;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,7 @@ import com.demo.service.MergeAndSortArrayService;
 import com.demo.service.StringReverseService;
 import com.demo.service.TriangleTypeService;
 import com.demo.web.rest.errors.CustomValidationException;
+import com.demo.web.rest.errors.ErrorConstants;
 
 import io.swagger.annotations.ApiParam;
 
@@ -45,13 +48,14 @@ public class DemoApiController implements DemoApi {
 
 	@Inject
 	private TriangleTypeService triangleTypeService;
+	
+	private String pattern = "[A-Za-z ]*" ;
 
 	/**
 	 * This method is used to get Fibonacci series number based on input
 	 * position
 	 * 
-	 * @param Integer
-	 *            n
+	 * @param long position
 	 * @return ResponseEntity<Series> containing series number
 	 * 
 	 */
@@ -59,7 +63,7 @@ public class DemoApiController implements DemoApi {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<Series> getFibonacci(
 			@Valid @ApiParam(value = "UserID (Principal)", required = false) @RequestHeader(value = "My-Api-Key", required = false) String myApiKey,
-			@NotNull @ApiParam(value = "The index (n) of the Fibonacci sequence", required = true) @RequestParam(value = "n", required = true) Integer position) {
+			@NotNull @ApiParam(value = "The index (position) of the Fibonacci sequence", required = true) @RequestParam(value = "position", required = true) long position) {
 		
 		LOGGER.info(" Going to get fibonacci series number based on input position ", position);
 		Long seriesNumber = fibonacciService.getFibonacciSeriesValue(position);
@@ -73,8 +77,7 @@ public class DemoApiController implements DemoApi {
 	/**
 	 * This method is used to Merging and sorting of input arrays.
 	 * 
-	 * @param Arrays
-	 *            arrays
+	 * @param Arrays arrays
 	 * 
 	 * @return ResponseEntity<FinalArray> ,the merged array
 	 * 
@@ -94,8 +97,7 @@ public class DemoApiController implements DemoApi {
 	/**
 	 * This method is used to reversing provided string input.
 	 * 
-	 * @param String
-	 *            sentence
+	 * @param String sentence
 	 * 
 	 * @return ResponseEntity<ReversedString> ,containing the reversed string
 	 *
@@ -107,7 +109,12 @@ public class DemoApiController implements DemoApi {
 		if (sentence == null || sentence.length() <=0)
 	      {
 			LOGGER.error("String to be revered is null or empty");
-	        throw new CustomValidationException("sourceString", "ERROR102", "Sentence should have at-least 1 word to be revered");
+	        throw new CustomValidationException("sourceString", ErrorConstants.SENTENCE_LENGTH_INVALID_CODE, ErrorConstants.SENTENCE_LENGTH_INVALID_MESSAGE);
+	      }
+		if (!Pattern.matches(pattern, sentence))
+	      {
+			LOGGER.error("String should have only alphabets and spaces");
+	        throw new CustomValidationException("sourceString", ErrorConstants.SENTENCE_INVALID_CHARACTERS_CODE, ErrorConstants.SENTENCE_INVALID_CHARACTERS_MESSAGE);
 	      }
 		LOGGER.info("Got the sentence to be revered ", sentence);
 		ReversedString inlineResponse2001 = new ReversedString();
@@ -122,12 +129,9 @@ public class DemoApiController implements DemoApi {
 	/**
 	 * This method is used to check for triangle type based its edges.
 	 * 
-	 * @param Integer
-	 *            a
-	 * @param Integer
-	 *            b
-	 * @param Integer
-	 *            c
+	 * @param Integer sideALength
+	 * @param Integer sideBLength
+	 * @param Integer sideCLength
 	 * 
 	 * @return ResponseEntity<Triangle> , containing the Triangle type
 	 *
@@ -135,9 +139,9 @@ public class DemoApiController implements DemoApi {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<Triangle> getTriangleType(
 			@ApiParam(value = "UserID (Principal)", required = false) @RequestHeader(value = "My-Api-Key", required = false) String myApiKey,
-			@NotNull @ApiParam(value = "The length of side a.", required = true) @RequestParam(value = "a", required = true) Integer sideALength,
-			@NotNull @ApiParam(value = "The length of side b.", required = true) @RequestParam(value = "b", required = true) Integer sideBLength,
-			@NotNull @ApiParam(value = "The length of side c", required = true) @RequestParam(value = "c", required = true) Integer sideCLength) {
+			@NotNull @ApiParam(value = "The length of side a.", required = true)  @RequestParam(value = "sideALength", required = true) Integer sideALength,
+			@NotNull @ApiParam(value = "The length of side b.", required = true)  @RequestParam(value = "sideBLength", required = true) Integer sideBLength,
+			@NotNull @ApiParam(value = "The length of side c", required = true)  @RequestParam(value = "sideCLength", required = true) Integer sideCLength) {
 
 		Triangle inlineResponse2001 = new Triangle();
 		LOGGER.info(" Got the triangle's side length ", sideALength, sideBLength, sideCLength);

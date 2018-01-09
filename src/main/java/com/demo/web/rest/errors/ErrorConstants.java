@@ -2,6 +2,7 @@ package com.demo.web.rest.errors;
 
 public final class ErrorConstants {
 
+	private static final int THRESHOLD = 92;
 	public static final String ERR_CONCURRENCY_FAILURE = "error.concurrencyFailure";
 	public static final String ERR_ACCESS_DENIED = "error.accessDenied";
 	public static final String ERR_VALIDATION = "error.validation";
@@ -10,26 +11,28 @@ public final class ErrorConstants {
 	public static final String ERR_SQL_ERROR = "error.sqlerError";
 	public static final String TYPE_MISMATCH = "error.typeMismatch";
 	public static final String ERR_FIELD = "error.fieldNotFound";
-	public static final String ERR_DB_NO_RECORD_FOUND="BAP100";
-	public static final String ERR_INVALID_DATEFORMAT="BAP101";
-	public static final String ERR_MISSING_PARAMETER="BAP102";
-	public static final String ERR_SERVICE_DOWN="BAP103";
-	public static final String ERR_CONTENT_TYPE_NOT_SUPPORTED="BAP104";
 
-
-	
-	public static final String ERR_ITEM_COUNT_REQUIRED ="error.itemCount.notnull";
-
-	public static final String ERR_ITEM_COUNT_INVALID ="error.itemCount.format";
-	
-	public static final String ERR_MAX_LENGTH ="DEM100";
-	public static final String ERR_MIN_LENGTH ="DEM101";
-
-	
-	
 	public static final String ERR_SIZE_LENGTH ="{javax.validation.constraints.Size.message}";
+ 	
+    /* Demo Service error codes start here */
+	public static final String FIBONACCI_NAGETIVE_INPUT_CODE = "ERROR100";
+	public static final String FIBONACCI_NAGETIVE_INPUT_MESSAGE = "Input can not be nagetive as fibonacci series starts with 0";
+	public static final String FIBONACCI_INPUT_THRESHOLD_CODE = "ERROR101";
+	public static final String FIBONACCI_INPUT_THRESHOLD_MESSAGE = "Input position must be 0 to "+ THRESHOLD+ " since result may exceed maximum "+Long.MAX_VALUE + " value for used datatype";
+	public static final String SENTENCE_LENGTH_INVALID_CODE = "ERROR102";
+	public static final String SENTENCE_LENGTH_INVALID_MESSAGE = "Sentence should have at-least 1 word to be reversed";
+	public static final String SENTENCE_INVALID_CHARACTERS_CODE = "ERROR103" ;
+	public static final String SENTENCE_INVALID_CHARACTERS_MESSAGE = "Sentence should have only alphabets and spaces";
+	public static final String ARRAY_JSON_INPUT_NULL_CODE = "ERROR104";
+	public static final String ARRAY_JSON_INPUT_NULL_MESSAGE = "JSON should contains at-least one integer array to get sorted";
+	public static final String JSON_INPUT_WITH_ALL_NULL_ARRAYS_CODE = "ERROR105";
+	public static final String JSON_INPUT_WITH_ALL_NULL_ARRAYS_MESSAGE = "At-least one array should contains integers to be sorted";
+	public static final String TRIANGLE_SIDE_INVALID_CODE = "ERROR106";
+	public static final String TRIANGLE_SIDE_INVALID_MESSAGE = "At-least one side of triangle is 0 ,so can't find out triangle type";
+	public static final String ERR_CONTENT_TYPE_NOT_SUPPORTED="ERROR107";
+	public static final String ERR_MISSING_PARAMETER="ERROR108";
+	 /* Demo Service error codes end here */
 	
-
 	private ErrorConstants() {
 	}
 

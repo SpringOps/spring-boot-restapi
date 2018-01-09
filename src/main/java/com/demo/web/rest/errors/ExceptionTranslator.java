@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 /**
@@ -45,21 +44,6 @@ public class ExceptionTranslator {
 		listOfError.add(error);
 		return createErrorsFromException(listOfError);
 	}
-
-	@ExceptionHandler(ServletRequestBindingException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ResponseBody
-	public Errors processValidationError(ServletRequestBindingException ex) {
-		List<Error> listOfError = new ArrayList<>();
-		Error error = new Error();
-		error.setField(ex.getMessage().split("'")[1]);
-		error.setErrorCode(ErrorConstants.ERR_MISSING_PARAMETER);
-		error.setMessage(ex.getMessage());
-		error.setDescription(ex.getMessage());
-		listOfError.add(error);
-		return createErrorsFromException(listOfError);
-	}
-
 	 
 	 
 	 @ExceptionHandler(AccessDeniedException.class)
@@ -76,31 +60,6 @@ public class ExceptionTranslator {
 			return createErrorsFromException(listOfError);
 	    } 
 	 
-	 @ExceptionHandler(ResourceAccessException.class)
-	    @ResponseStatus(HttpStatus.FORBIDDEN)
-	    @ResponseBody
-	    public Errors processServiceDownException(ResourceAccessException exception) {
-	    	List<Error> listOfError = new ArrayList<>();
-	    	Error error = new Error();exception.getLocalizedMessage();
-			//error.setField(field);
-			error.setErrorCode(ErrorConstants.ERR_SERVICE_DOWN);
-			error.setMessage(exception.getMessage());
-			error.setDescription(exception.getMessage());
-			listOfError.add(error);
-			return createErrorsFromException(listOfError);
-	    } 
-	 
-	 
-
-	/*private Error processFieldErrors(List<FieldError> fieldErrors) {
-		Error dto = new Error(ErrorConstants.ERR_VALIDATION);
-
-		for (FieldError fieldError : fieldErrors) {
-			dto.add(fieldError.getObjectName(), fieldError.getField(), fieldError.getDefaultMessage());
-		}
-
-		return dto;
-	}*/
 
 	 @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	    @ResponseBody
@@ -145,9 +104,9 @@ public class ExceptionTranslator {
 	@ResponseBody
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public Object processMethodHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
-		if (exception.getCause().getMessage().contains("java.lang.Boolean")) {
+		if (exception.getCause().getMessage().contains("Unrecognized token")) {
 			return new Error(ErrorConstants.TYPE_MISMATCH,
-					(exception.getCause() != null ? "Invalid boolean Format" : ""));
+					(exception.getCause() != null ? "Only numbers allowed in int array" : ""));
 		}
 		if (exception.getCause().getMessage().contains("java.lang.Long")) {
 			return new Error(ErrorConstants.TYPE_MISMATCH,
@@ -179,6 +138,10 @@ public class ExceptionTranslator {
 	@ResponseBody
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public Error processNumberFormatException(MethodArgumentTypeMismatchException exception) {
+		if (exception.getCause().toString().contains("java.lang.NumberFormatException")) {
+			return new Error(ErrorConstants.TYPE_MISMATCH,
+					(exception.getCause() != null ? "Please input only numeric values " : ""));
+		}
 		return new Error(ErrorConstants.TYPE_MISMATCH, (exception.getCause() != null ? exception.getCause()
 				.getMessage()
 				+ (exception.getCause().getCause() != null ? ", " + exception.getCause().getCause().getMessage() : "")
@@ -204,6 +167,20 @@ public class ExceptionTranslator {
 		Errors errors = new Errors();
 		errors.setErrorList(listOfError);
 		return errors;
+	}
+	
+	@ExceptionHandler(ServletRequestBindingException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public Errors processValidationError(ServletRequestBindingException ex) {
+		List<Error> listOfError = new ArrayList<>();
+		Error error = new Error();
+		error.setField(ex.getMessage().split("'")[1]);
+		error.setErrorCode(ErrorConstants.ERR_MISSING_PARAMETER);
+		error.setMessage(ex.getMessage());
+		error.setDescription(ex.getMessage());
+		listOfError.add(error);
+		return createErrorsFromException(listOfError);
 	}
 	
 	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)

@@ -1,7 +1,7 @@
 package com.demo.service.impl;
 
 public enum TriangleType {
-	ERROR("Undefine-Shape"),EQUILATERAL("Equilateral"),SCALENE("Scalene"),ISOSCELES("Isosceles");
+	ERROR("Not-A-Valid-Triangle"),EQUILATERAL("Equilateral"),SCALENE("Scalene"),ISOSCELES("Isosceles");
 	
 	private final String text;
 

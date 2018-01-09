@@ -18,7 +18,7 @@ public class Arrays  implements Serializable {
 	 */
 	private static final long serialVersionUID = -2948434562870113748L;
 
-@JsonProperty("Array1")
+  @JsonProperty("Array1")
   private Integer[] array1 = null;
 
   @JsonProperty("Array2")
