@@ -28,7 +28,7 @@ public final class ErrorConstants {
 	public static final String JSON_INPUT_WITH_ALL_NULL_ARRAYS_CODE = "ERROR105";
 	public static final String JSON_INPUT_WITH_ALL_NULL_ARRAYS_MESSAGE = "At-least one array should contains integers to be sorted";
 	public static final String TRIANGLE_SIDE_INVALID_CODE = "ERROR106";
-	public static final String TRIANGLE_SIDE_INVALID_MESSAGE = "At-least one side of triangle is 0 ,so can't find out triangle type";
+	public static final String TRIANGLE_SIDE_INVALID_MESSAGE = "Please provide valid value for triangle sides";
 	public static final String ERR_CONTENT_TYPE_NOT_SUPPORTED="ERROR107";
 	public static final String ERR_MISSING_PARAMETER="ERROR108";
 	 /* Demo Service error codes end here */

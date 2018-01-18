@@ -131,7 +131,7 @@ public class DemoApiControllerTest {
 	
 	@Test(expected = CustomValidationException.class)
 	public void testReverseWordsWithNumericCharString() {
-		String sentence = "this23  test56f34";
+		String sentence = "that$%@# my app";
 		ResponseEntity<ReversedString> responseEntity = demoApiController.getReverseWords(
 				null,
 				sentence);

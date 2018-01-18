@@ -104,7 +104,8 @@ public class ExceptionTranslator {
 	@ResponseBody
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public Object processMethodHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
-		if (exception.getCause().getMessage().contains("Unrecognized token")) {
+		if (exception.getCause().getMessage().contains("Unrecognized token") ||
+				exception.getCause().getMessage().contains("Unexpected character")) {
 			return new Error(ErrorConstants.TYPE_MISMATCH,
 					(exception.getCause() != null ? "Only numbers allowed in int array" : ""));
 		}

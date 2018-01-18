@@ -49,7 +49,7 @@ public class DemoApiController implements DemoApi {
 	@Inject
 	private TriangleTypeService triangleTypeService;
 	
-	private String pattern = "[A-Za-z ]*" ;
+	private String pattern = "[0-9A-Za-z'! ]*" ;
 
 	/**
 	 * This method is used to get Fibonacci series number based on input
@@ -145,6 +145,11 @@ public class DemoApiController implements DemoApi {
 
 		Triangle inlineResponse2001 = new Triangle();
 		LOGGER.info(" Got the triangle's side length ", sideALength, sideBLength, sideCLength);
+		if (sideALength == null|| sideBLength == null || sideCLength == null)
+	      {
+			LOGGER.error("At-least one side of triangle is null");
+	        throw new CustomValidationException("TriangleSide", ErrorConstants.TRIANGLE_SIDE_INVALID_CODE, ErrorConstants.TRIANGLE_SIDE_INVALID_MESSAGE);
+	      }
 		String triangleType = triangleTypeService.findTriangleType(sideALength, sideBLength, sideCLength);
 		inlineResponse2001.setResult(triangleType);
 		LOGGER.info(" Triagle type has been identified ", triangleType);

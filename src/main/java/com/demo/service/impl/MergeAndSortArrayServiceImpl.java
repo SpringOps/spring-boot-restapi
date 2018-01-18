@@ -58,27 +58,41 @@ public class MergeAndSortArrayServiceImpl implements MergeAndSortArrayService {
 
 		LOGGER.info("merging arrays");
 		TreeSet<Integer> hashedArray = new TreeSet<Integer>();
+		boolean emptyFlag = true;
 		if (arrayOne == null && arrayTwo == null && arrayThree == null) {
-			LOGGER.error("Arrays does'nt have elements , can not merge it");
+			LOGGER.error("Arrays doesn't have elements , can not merge it");
 			throw new CustomValidationException("sourceString", ErrorConstants.JSON_INPUT_WITH_ALL_NULL_ARRAYS_CODE, ErrorConstants.JSON_INPUT_WITH_ALL_NULL_ARRAYS_MESSAGE);
 		}
 		if (arrayOne != null) {
 			for (Integer entry : arrayOne) {
-				if(entry != null)
+				if(entry != null){
+					emptyFlag = false;
 					hashedArray.add(entry);
+				}
+					
 			}
 		}
 		if (arrayTwo != null) {
 			for (Integer entry : arrayTwo) {
-				if(entry != null)
+				if(entry != null){
+					emptyFlag = false;
 					hashedArray.add(entry);
+				}
 			}
 		}
 		if (arrayThree != null) {
 			for (Integer entry : arrayThree) {
-				if(entry != null)
+				if(entry != null){
+					emptyFlag = false;
 					hashedArray.add(entry);
+				}
 			}
+		}
+		if(emptyFlag)
+		{
+			LOGGER.error("Arrays doesn't have elements , can not merge it");
+			throw new CustomValidationException("sourceString", ErrorConstants.JSON_INPUT_WITH_ALL_NULL_ARRAYS_CODE, ErrorConstants.JSON_INPUT_WITH_ALL_NULL_ARRAYS_MESSAGE);
+		
 		}
 		LOGGER.info("Arrays has been merge and sorted");
 		return hashedArray.toArray(new Integer[0]);
