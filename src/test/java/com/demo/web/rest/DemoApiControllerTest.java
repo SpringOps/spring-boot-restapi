@@ -3,6 +3,8 @@ package com.demo.web.rest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import java.math.BigDecimal;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,7 +61,7 @@ public class DemoApiControllerTest {
 	@Test
 	public void testGetFibonacci() {
 		long seriesPosition = 4;
-		Mockito.when(fibonacciService.getFibonacciSeriesValue(seriesPosition)).thenReturn(3L);
+		Mockito.when(fibonacciService.getFibonacciSeriesValue(seriesPosition)).thenReturn(BigDecimal.valueOf(3l));
 		ResponseEntity<Series> responseEntity = demoApiController.getFibonacci(
 				"testUser",
 				seriesPosition);
@@ -70,7 +72,7 @@ public class DemoApiControllerTest {
 	@Test
 	public void testGetFibonacciWithoutApiKey() {
 		long seriesPosition = 8;
-		Mockito.when(fibonacciService.getFibonacciSeriesValue(seriesPosition)).thenReturn(3L);
+		Mockito.when(fibonacciService.getFibonacciSeriesValue(seriesPosition)).thenReturn(BigDecimal.valueOf(3l));
 		ResponseEntity<Series> responseEntity = demoApiController.getFibonacci(
 				null,
 				seriesPosition);

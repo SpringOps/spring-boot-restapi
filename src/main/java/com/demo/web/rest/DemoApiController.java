@@ -1,5 +1,6 @@
 package com.demo.web.rest;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -66,7 +67,7 @@ public class DemoApiController implements DemoApi {
 			@NotNull @ApiParam(value = "The index (position) of the Fibonacci sequence", required = true) @RequestParam(value = "position", required = true) long position) {
 		
 		LOGGER.info(" Going to get fibonacci series number based on input position ", position);
-		Long seriesNumber = fibonacciService.getFibonacciSeriesValue(position);
+		BigDecimal seriesNumber = fibonacciService.getFibonacciSeriesValue(position);
 		Series series = new Series();
 		series.setResult(seriesNumber);
 		LOGGER.info(" Got the series number and returning it ", seriesNumber);

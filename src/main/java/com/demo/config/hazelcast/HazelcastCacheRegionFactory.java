@@ -1,105 +1,83 @@
-package com.demo.config.hazelcast;
-
-import com.demo.config.CacheConfiguration;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.hibernate.HazelcastTimestamper;
-import com.hazelcast.hibernate.local.CleanupService;
-import com.hazelcast.hibernate.local.LocalRegionCache;
-import com.hazelcast.hibernate.local.TimestampsRegionCache;
-import com.hazelcast.hibernate.region.*;
-
-import org.hibernate.cache.CacheException;
-import org.hibernate.cache.spi.*;
-import org.hibernate.cache.spi.access.AccessType;
-import org.hibernate.cfg.Settings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+ package com.demo.config.hazelcast;
 
 import java.util.Properties;
 
-public class HazelcastCacheRegionFactory implements RegionFactory {
+import org.hibernate.cache.CacheException;
+import org.hibernate.cache.RegionFactory;
+import org.hibernate.cache.spi.CacheDataDescription;
+import org.hibernate.cache.spi.CollectionRegion;
+import org.hibernate.cache.spi.EntityRegion;
+import org.hibernate.cache.spi.NaturalIdRegion;
+import org.hibernate.cache.spi.QueryResultsRegion;
+import org.hibernate.cache.spi.TimestampsRegion;
+import org.hibernate.cache.spi.access.AccessType;
+import org.hibernate.cfg.Settings;
 
-   
-	private static final long serialVersionUID = -3554457142210678219L;
+ 
+ public class HazelcastCacheRegionFactory implements RegionFactory {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(HazelcastCacheRegionFactory.class);
+	@Override
+	public void start(Settings settings, Properties properties) throws CacheException {
+		// TODO Auto-generated method stub
+		
+	}
 
-    private HazelcastInstance hazelcastInstance;
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
 
-    private CleanupService cleanupService;
+	@Override
+	public boolean isMinimalPutsEnabledByDefault() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-    public HazelcastCacheRegionFactory() {
-        super();
-        hazelcastInstance = CacheConfiguration.getHazelcastInstance();
-    }
+	@Override
+	public AccessType getDefaultAccessType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    /**
-     * @return true - for a large cluster, unnecessary puts will most likely slow things down.
-     */
-    public boolean isMinimalPutsEnabledByDefault() {
-        return true;
-    }
+	@Override
+	public long nextTimestamp() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
-    public final QueryResultsRegion buildQueryResultsRegion(String regionName, Properties properties)
-            throws CacheException {
+	@Override
+	public EntityRegion buildEntityRegion(String regionName, Properties properties, CacheDataDescription metadata)
+			throws CacheException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return new HazelcastQueryResultsRegion(hazelcastInstance, regionName, properties);
-    }
+	@Override
+	public NaturalIdRegion buildNaturalIdRegion(String regionName, Properties properties, CacheDataDescription metadata)
+			throws CacheException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public NaturalIdRegion buildNaturalIdRegion(String regionName, Properties properties, CacheDataDescription metadata)
-            throws CacheException {
+	@Override
+	public CollectionRegion buildCollectionRegion(String regionName, Properties properties,
+			CacheDataDescription metadata) throws CacheException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return new HazelcastNaturalIdRegion(hazelcastInstance, regionName, properties, metadata);
-    }
+	@Override
+	public QueryResultsRegion buildQueryResultsRegion(String regionName, Properties properties) throws CacheException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public CollectionRegion buildCollectionRegion(String regionName, Properties properties,
-                                                  CacheDataDescription metadata) throws CacheException {
-
-        HazelcastCollectionRegion<LocalRegionCache> region = new HazelcastCollectionRegion<>(hazelcastInstance,
-                regionName, properties, metadata, new LocalRegionCache(regionName, hazelcastInstance, metadata));
-
-        cleanupService.registerCache(region.getCache());
-        return region;
-    }
-
-    public EntityRegion buildEntityRegion(String regionName, Properties properties,
-                                          CacheDataDescription metadata) throws CacheException {
-
-        HazelcastEntityRegion<LocalRegionCache> region = new HazelcastEntityRegion<>(hazelcastInstance,
-                regionName, properties, metadata, new LocalRegionCache(regionName, hazelcastInstance, metadata));
-
-        cleanupService.registerCache(region.getCache());
-        return region;
-    }
-
-    public TimestampsRegion buildTimestampsRegion(String regionName, Properties properties)
-            throws CacheException {
-        return new HazelcastTimestampsRegion<>(hazelcastInstance, regionName, properties,
-                new TimestampsRegionCache(regionName, hazelcastInstance));
-    }
-
-    public void start(Settings settings, Properties properties) throws CacheException {
-        // Do nothing the hazelcast hazelcastInstance is injected
-    	LOGGER.info("Starting up {}", getClass().getSimpleName());
-
-        if (hazelcastInstance == null) {
-            throw new IllegalArgumentException("Hazelcast hazelcastInstance must not be null");
-        }
-        cleanupService = new CleanupService(hazelcastInstance.getName());
-    }
-
-    public void stop() {
-        // Do nothing the hazelcast instance is managed globally
-    	LOGGER.info("Shutting down {}", getClass().getSimpleName());
-        cleanupService.stop();
-    }
-
-    public AccessType getDefaultAccessType() {
-        return AccessType.READ_WRITE;
-    }
-
-    @Override
-    public long nextTimestamp() {
-        return HazelcastTimestamper.nextTimestamp(hazelcastInstance);
-    }
-}
+	@Override
+	public TimestampsRegion buildTimestampsRegion(String regionName, Properties properties) throws CacheException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+ 
+ }
+ 

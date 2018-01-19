@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.util.StopWatch;
 
 import com.demo.config.Constants;
-import com.demo.config.JHipsterProperties;
 
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -41,23 +40,23 @@ public class SwaggerConfiguration {
      * @return the Swagger Springfox configuration
      */
     @Bean
-    public Docket swaggerSpringfoxDocket(JHipsterProperties jHipsterProperties) {
+    public Docket swaggerSpringfoxDocket() {
     	LOGGER.debug("Starting Swagger");
         StopWatch watch = new StopWatch();
         watch.start();
         Contact contact = new Contact(
-            jHipsterProperties.getSwagger().getContactName(),
-            jHipsterProperties.getSwagger().getContactUrl(),
-            jHipsterProperties.getSwagger().getContactEmail());
+            "Test User",
+            "Test",
+            "test@abc.com");
 
         ApiInfo apiInfo = new ApiInfo(
-            jHipsterProperties.getSwagger().getTitle(),
-            jHipsterProperties.getSwagger().getDescription(),
-            jHipsterProperties.getSwagger().getVersion(),
-            jHipsterProperties.getSwagger().getTermsOfServiceUrl(),
+            "My App",
+             "",
+            "0.1",
+            "",
             contact,
-            jHipsterProperties.getSwagger().getLicense(),
-            jHipsterProperties.getSwagger().getLicenseUrl());
+            "",
+           "");
 
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
         		.select()

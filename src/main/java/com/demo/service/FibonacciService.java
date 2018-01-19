@@ -1,6 +1,6 @@
 package com.demo.service;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 
 /**
  * Service Interface get Fibonacci series number based on input position.
@@ -12,6 +12,6 @@ public interface FibonacciService {
 	 * @param Integer position
 	 * @return Long series number
 	 */
-	Long getFibonacciSeriesValue(long position);
+	BigDecimal getFibonacciSeriesValue(long position);
 	
 }

@@ -21,9 +21,9 @@ public class Series implements Serializable {
 	 */
 	private static final long serialVersionUID = 4558521770273962172L;
 	@JsonProperty("Result")
-	private Long result = null;
+	private BigDecimal result = null;
 
-	public Series result(Long result) {
+	public Series result(BigDecimal result) {
 		this.result = result;
 		return this;
 	}
@@ -37,11 +37,11 @@ public class Series implements Serializable {
 
 	@Valid
 
-	public Long getResult() {
+	public BigDecimal getResult() {
 		return result;
 	}
 
-	public void setResult(Long result) {
+	public void setResult(BigDecimal result) {
 		this.result = result;
 	}
 

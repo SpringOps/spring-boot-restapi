@@ -106,8 +106,8 @@ public class ExceptionTranslator {
 	public Object processMethodHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
 		if (exception.getCause().getMessage().contains("Unrecognized token") ||
 				exception.getCause().getMessage().contains("Unexpected character")) {
-			return new Error(ErrorConstants.TYPE_MISMATCH,
-					(exception.getCause() != null ? "Only numbers allowed in int array" : ""));
+			return new Error(ErrorConstants.TYPE_MISMATCH,ErrorConstants.INVALID_DATA_TYPE,
+					(exception.getCause() != null ? ErrorConstants.INVALID_DATA_TYPE_MESSAGE : ""), null);
 		}
 		if (exception.getCause().getMessage().contains("java.lang.Long")) {
 			return new Error(ErrorConstants.TYPE_MISMATCH,
@@ -140,8 +140,8 @@ public class ExceptionTranslator {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public Error processNumberFormatException(MethodArgumentTypeMismatchException exception) {
 		if (exception.getCause().toString().contains("java.lang.NumberFormatException")) {
-			return new Error(ErrorConstants.TYPE_MISMATCH,
-					(exception.getCause() != null ? "Please input only numeric values " : ""));
+			return new Error(ErrorConstants.TYPE_MISMATCH,ErrorConstants.INVALID_DATA_TYPE,
+					(exception.getCause() != null ? ErrorConstants.INVALID_DATA_TYPE_MESSAGE : ""), null);
 		}
 		return new Error(ErrorConstants.TYPE_MISMATCH, (exception.getCause() != null ? exception.getCause()
 				.getMessage()

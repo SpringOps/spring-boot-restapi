@@ -42,7 +42,13 @@ public class Error implements Serializable {
 		this.description = description;
 		this.field = field;
 	}
-
+	public Error( String message, String errorCode, String description, String field) {
+		super();
+		this.field = field;
+		this.description = description;
+		this.errorCode = errorCode;
+		this.message = message;
+	}
 	public Error() {
 
 	}

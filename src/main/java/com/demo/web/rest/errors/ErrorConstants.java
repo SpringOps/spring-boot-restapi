@@ -31,6 +31,8 @@ public final class ErrorConstants {
 	public static final String TRIANGLE_SIDE_INVALID_MESSAGE = "Please provide valid value for triangle sides";
 	public static final String ERR_CONTENT_TYPE_NOT_SUPPORTED="ERROR107";
 	public static final String ERR_MISSING_PARAMETER="ERROR108";
+	public static final String INVALID_DATA_TYPE = "ERROR109";
+	public static final String INVALID_DATA_TYPE_MESSAGE = "Please input only numeric values";
 	 /* Demo Service error codes end here */
 	
 	private ErrorConstants() {

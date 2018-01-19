@@ -11,13 +11,8 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration;
-import org.springframework.boot.actuate.autoconfigure.MetricRepositoryAutoConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
-import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
@@ -28,12 +23,9 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import com.demo.config.Constants;
 import com.demo.config.DefaultProfileUtil;
-import com.demo.config.JHipsterProperties;
 
 @ComponentScan
-@EnableAutoConfiguration(exclude = { LiquibaseAutoConfiguration.class, EurekaClientAutoConfiguration.class,
-		MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class })
-@EnableConfigurationProperties({ JHipsterProperties.class, LiquibaseProperties.class })
+@EnableAutoConfiguration(exclude = { LiquibaseAutoConfiguration.class})
 @EnableResourceServer
 public class DemoServiceApp {
 
@@ -93,17 +85,5 @@ public class DemoServiceApp {
 						+ "Config Server: \t{}\n----------------------------------------------------------",
 				configServerStatus == null ? "Not found or not setup for this application" : configServerStatus);
 	}
-	
-	@Bean
-	BasicAuthenticationFilter basicAuthFilter(AuthenticationManager authenticationManager,
-			BasicAuthenticationEntryPoint basicAuthEntryPoint) {
-		return new BasicAuthenticationFilter(authenticationManager, basicAuthEntryPoint());
-	}
-	
-	@Bean
-	BasicAuthenticationEntryPoint basicAuthEntryPoint() {
-		BasicAuthenticationEntryPoint bauth = new BasicAuthenticationEntryPoint();
-		bauth.setRealmName("gaurav-bytes");
-		return bauth;
-	}
+	 
 }
